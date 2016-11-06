@@ -1,5 +1,5 @@
 {
-  "name": "@revolttv/sequelize-to-joi",
+  "name": "sequelize-to-joi",
   "version": "1.0.0",
   "description": "Converts a sequelize Model schema to a Joi validator",
   "main": "lib/index.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RevoltTV/sequelize-to-joi.git"
+    "url": "git+https://github.com/Danlock/sequelize-to-joi.git"
   },
   "author": "REVOLT TV <digital.engineering@revolt.tv>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RevoltTV/sequelize-to-joi/issues"
+    "url": "https://github.com/Danlock/sequelize-to-joi/issues"
   },
-  "homepage": "https://github.com/RevoltTV/sequelize-to-joi#readme",
+  "homepage": "https://github.com/Danlock/sequelize-to-joi#readme",
   "files": [
     "lib",
     "src",
