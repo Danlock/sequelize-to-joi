@@ -1,8 +1,9 @@
-import _         from 'lodash';
-import Joi       from 'joi';
-import Sequelize from 'sequelize';
+'use strict';
+const _         = require('lodash');
+const Joi       = require('joi');
+const Sequelize = require('sequelize');
 
-import map from './map';
+const map = require('./map');
 
 export function findAndConvertModels(object, options) {
     _.forIn(object, (value, key) => {

@@ -1,5 +1,6 @@
-import _   from 'lodash';
-import Joi from 'joi';
+'use strict';
+const _   = require('lodash');
+const Joi = require('joi');
 
 function mapType(key, attribute) {
     switch (key) {
