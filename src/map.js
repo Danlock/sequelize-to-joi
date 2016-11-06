@@ -17,7 +17,8 @@ function mapType(key, attribute) {
         case 'STRING':
         case 'TEXT':
             return Joi.string();
-
+        case 'UUID':
+            return Joi.string().guid();
         case 'ENUM':
             return Joi.string().allow(attribute.values);
 
