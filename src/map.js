@@ -68,7 +68,7 @@ function mapValidator(joi, validator, key) {
     }
 }
 
-export default function (attribute) {
+module.exports = function (attribute) {
     let joi = mapType(_.get(attribute, 'type.key', ''), attribute);
 
     // Add model comments to schema description
