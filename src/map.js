@@ -35,7 +35,8 @@ function mapType(key, attribute) {
         case 'JSON':
         case 'JSONB':
             return Joi.object();
-
+        case 'ARRAY':
+            return Joi.array().sparse();
         default:
             return Joi.any();
     }
