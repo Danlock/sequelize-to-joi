@@ -1,6 +1,6 @@
 # Sequelize to Joi
 
-Takes a Sequelize model and constructs a Joi validator from it
+Takes a Sequelize model and constructs a Joi validator from it. Forked to backport for earlier Node.js versions.
 
 ## Usage
 
