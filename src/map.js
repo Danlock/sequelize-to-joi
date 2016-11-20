@@ -2,6 +2,33 @@
 const _   = require('lodash');
 const Joi = require('joi');
 
+const VALID_GEOJSON_TYPES = ['Point', 'Linestring', 'Polygon','MultiPoint','MultiLineString','MultiPolygon','GeometryCollection','FeatureCollection','Feature'];
+
+function createGeoJSONValidator() {
+    let geojsonBasic = Joi.object({
+        type: Joi.string().valid(VALID_GEOJSON_TYPES).insensitive(),
+        coordinates: Joi.array().sparse(),
+        bbox: Joi.array().sparse(),
+        properties: Joi.object(),
+        crs: Joi.object({
+            type: Joi.string().valid('name','link').insensitive().required(),
+            properties: Joi.object().required(),
+        }),
+    });
+    //set child keys to original joi object
+    geojsonBasic = geojsonBasic.keys({
+        geometry: geojsonBasic,
+        geometries: Joi.array().items(geojsonBasic).sparse(),
+        features: Joi.array().items(geojsonBasic).sparse(),
+    });
+    //add new and improved geojson object to the object again so that the structure is circular 
+    return geojsonBasic.keys({
+        geometry: geojsonBasic,
+        geometries: Joi.array().items(geojsonBasic).sparse(),
+        features: Joi.array().items(geojsonBasic).sparse(),
+    });
+};
+
 function mapType(key, attribute) {
     switch (key) {
         // NUMBER TYPES
@@ -12,7 +39,8 @@ function mapType(key, attribute) {
         case 'DECIMAL':
         case 'DOUBLE':
         case 'FLOAT':
-            return Joi.number();
+        case 'REAL':
+            return attribute.precision ? Joi.number().precision(attribute.precision) : Joi.number();
 
         // STRING TYPES
         case 'STRING':
@@ -37,6 +65,8 @@ function mapType(key, attribute) {
             return Joi.object();
         case 'ARRAY':
             return Joi.array().sparse();
+        case 'GEOMETRY': 
+            return createGeoJSONValidator();
         default:
             return Joi.any();
     }
@@ -92,4 +122,4 @@ module.exports = function (attribute) {
     });
 
     return joi;
-}
+};
