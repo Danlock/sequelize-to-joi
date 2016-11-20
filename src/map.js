@@ -62,7 +62,7 @@ function mapType(key, attribute) {
             return Joi.boolean();
         case 'JSON':
         case 'JSONB':
-            return Joi.object();
+            return Joi.alternatives().try(Joi.array(), Joi.object());
         case 'ARRAY':
             return Joi.array().sparse();
         case 'GEOMETRY': 
