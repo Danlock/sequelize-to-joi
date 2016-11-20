@@ -11,7 +11,7 @@ sequelizeToJoi(model, [options = {}])
 ### Example:
 
 ```
-import sequelizeToJoi from '@revolttv/sequelize-to-joi';
+import sequelizeToJoi from 'sequelize-to-joi';
 
 let model = sequelize.define('YourModel', {
     name: Sequelize.STRING
