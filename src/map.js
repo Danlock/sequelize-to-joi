@@ -27,7 +27,18 @@ function createGeoJSONValidator() {
         geometries: Joi.array().items(geojsonBasic).sparse(),
         features: Joi.array().items(geojsonBasic).sparse(),
     });
-};
+}
+
+function createNonIntegerValidator(attr) {
+    let j = Joi.number();
+    if (!attr.type) return j;
+    if (attr.type._length) {
+        let bound = Math.pow(10,attr.type._length);
+        j = j.less(bound).greater(-1 * bound);
+    }
+    if (attr.type._decimals) j = j.precision(attr.type._decimals).strict();
+    return j;
+}
 
 function mapType(key, attribute) {
     switch (key) {
@@ -40,7 +51,7 @@ function mapType(key, attribute) {
         case 'DOUBLE':
         case 'FLOAT':
         case 'REAL':
-            return attribute.precision ? Joi.number().precision(attribute.precision) : Joi.number();
+            return createNonIntegerValidator(attribute);
 
         // STRING TYPES
         case 'STRING':
@@ -100,6 +111,11 @@ function mapValidator(joi, validator, key) {
 }
 
 module.exports = function (attribute) {
+    //allow user to personally set joi objects in models, mainly for JSON/B data types
+    if (attribute.sequelize_to_joi_override) {
+        return attribute.sequelize_to_joi_override;
+    }
+
     let joi = mapType(_.get(attribute, 'type.key', ''), attribute);
 
     // Add model comments to schema description
